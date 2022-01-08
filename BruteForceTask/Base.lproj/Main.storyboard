@@ -37,14 +37,14 @@
                                         <rect key="frame" x="0.0" y="137.5" width="46" height="30"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
-                                            <action selector="onBut:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kar-yp-zmZ"/>
+                                            <action selector="buttonOfChangeColorView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xW9-HW-FOo"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6k-dA-QeT">
                                         <rect key="frame" x="0.0" y="188.5" width="46" height="30"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
-                                            <action selector="onButtonGeneration:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HYp-Ms-6ib"/>
+                                            <action selector="buttonOfGenerationPassword:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Npe-hv-3fu"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -58,8 +58,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="button" destination="ebP-VR-7n1" id="3sq-nv-aMa"/>
-                        <outlet property="buttonGeneration" destination="h6k-dA-QeT" id="uY5-u2-L9C"/>
+                        <outlet property="buttonOfGenerationPassword" destination="h6k-dA-QeT" id="UdZ-IK-OFm"/>
                         <outlet property="indicator" destination="d59-Y7-CVy" id="ixs-mW-u9h"/>
                         <outlet property="label" destination="EDS-sN-Dzu" id="EYL-ro-td0"/>
                         <outlet property="textField" destination="sp9-Mn-jkW" id="g7v-Nh-4Yk"/>

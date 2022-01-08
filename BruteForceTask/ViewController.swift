@@ -9,14 +9,18 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var buttonGeneration: UIButton!
+    @IBOutlet weak var buttonOfGenerationPassword: UIButton!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     
-    let operation = GenerationPassword()
+    // MARK: - Properties
+    
     let queue = OperationQueue()
+    let mainQueue = OperationQueue.main
     
     var isBlack: Bool = false {
         didSet {
@@ -28,77 +32,43 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func onBut(_ sender: Any) {
+    // MARK: - Actions
+    
+    @IBAction func buttonOfChangeColorView(_ sender: Any) {
         isBlack.toggle()
     }
     
-    @IBAction func onButtonGeneration(_ sender: Any) {
-        self.indicator.startAnimating()
-        self.indicator.hidesWhenStopped = false
+    @IBAction func buttonOfGenerationPassword(_ sender: Any) {
+        self.textField.text = String.random()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        if self.textField.text != "" {
+            textField.isSecureTextEntry = true
+            let passwordSelection = GenerationPassword(password: textField.text ?? "")
+            indicator.startAnimating()
+            buttonOfGenerationPassword.isEnabled = false
+            queue.addOperation(passwordSelection)
             
-            if self.textField.text != "" {
-                self.queue.addOperation(self.operation)
+            let operationBlock = BlockOperation {
                 self.label.text = self.textField.text
                 self.textField.isSecureTextEntry = false
-                self.buttonGeneration.isEnabled = false
+                self.buttonOfGenerationPassword.isEnabled = true
                 self.indicator.stopAnimating()
                 self.indicator.hidesWhenStopped = true
             }
+            
+            passwordSelection.completionBlock = {
+                self.mainQueue.addOperation(operationBlock)
+            }
         }
     }
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         indicator.hidesWhenStopped = true
-        textField.isSecureTextEntry = true
         label.text = "Здесь появится ваш пароль"
-        buttonGeneration.setTitle("Сгенерировать", for: .normal)
-        buttonGeneration.setTitle("Пароль сгенерирован", for: .disabled)
-    }
-}
-
-class GenerationPassword: Operation {
-    
-    func indexOf(character: Character, _ array: [String]) -> Int {
-        return array.firstIndex(of: String(character))!
-    }
-    
-    func characterAt(index: Int, _ array: [String]) -> Character {
-        return index < array.count ? Character(array[index])
-            : Character("")
-    }
-    
-    func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
-        var str: String = string
-        
-        if str.count <= 0 {
-            str.append(characterAt(index: 0, array))
-        } else {
-            str.replace(at: str.count - 1,
-                        with: characterAt(index: (indexOf(character: str.last!, array) + 1) % array.count, array))
-            
-            if indexOf(character: str.last!, array) == 0 {
-                str = String(generateBruteForce(String(str.dropLast()), fromArray: array)) + String(str.last!)
-            }
-        }
-        
-        return str
-    }
-}
-
-extension String {
-    var digits: String { return "0123456789" }
-    var lowercase: String { return "abcdefghijklmnopqrstuvwxyz" }
-    var uppercase: String { return "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }
-    var punctuation: String { return "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~" }
-    var letters: String { return lowercase + uppercase }
-    var printable: String { return digits + letters + punctuation }
-    
-    mutating func replace(at index: Int, with character: Character) {
-        var stringArray = Array(self)
-        stringArray[index] = character
-        self = String(stringArray)
+        buttonOfGenerationPassword.setTitle("Сгенерировать пароль", for: .normal)
+        buttonOfGenerationPassword.setTitle("Подбор пароля", for: .disabled)
     }
 }
