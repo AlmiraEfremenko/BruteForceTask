@@ -6,9 +6,13 @@
 //
 import UIKit
 
+/**
+ This class generates a password and is used to pass to the OperationQueue
+ */
+
 class GenerationPassword: Operation {
     
-    var password: String
+    private var password: String
     
     init(password: String) {
         self.password = password
@@ -18,13 +22,15 @@ class GenerationPassword: Operation {
         if self.isCancelled {
             return
         }
-        
         bruteForce(passwordToUnlock: password)
     }
     
     // MARK: - Setting password generation
     
-    func bruteForce(passwordToUnlock: String) {
+    /// This password guessing function
+    /// - Parameter passwordToUnlock: password guessing parameter
+    
+    private func bruteForce(passwordToUnlock: String) {
         
         let allowedCharacters: [String] = String().printable.map { String($0) }
         var password: String = ""
@@ -33,39 +39,55 @@ class GenerationPassword: Operation {
             password = generateBruteForce(password, fromArray: allowedCharacters)
             print(password)
         }
-        
         print(password)
     }
     
     // MARK: - Numerical sampling method
     
-    func indexOf(character: Character, _ array: [String]) -> Int {
+    /// Method to iterate over characters and return the element at the first index
+    /// - Parameters:
+    ///   - character: character iteration
+    ///   - array: the array of strings
+    /// - Returns: the first index in the array
+    
+    private func indexOf(character: Character, _ array: [String]) -> Int {
         return array.firstIndex(of: String(character)) ?? 0
     }
     
     // MARK: - Character sampling method
     
-    func characterAt(index: Int, _ array: [String]) -> Character {
+    /// Method to iterate over characters in an array at the index
+    /// - Parameters:
+    ///   - index: iteration index
+    ///   - array: character array
+    /// - Returns: character
+    
+    private func characterAt(index: Int, _ array: [String]) -> Character {
         return index < array.count ? Character(array[index])
             : Character("")
     }
     
     // MARK: - String sampling method
     
-    func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
-        var str = string
+    /// Password string generation method
+    /// - Parameters:
+    ///   - string: iteration string
+    ///   - array: array string of elements
+    /// - Returns: generation string password
+    
+    private func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
+        var generationString = string
         
-        if str.count <= 0 {
-            str.append(characterAt(index: 0, array))
+        if generationString.count <= 0 {
+            generationString.append(characterAt(index: 0, array))
         } else {
-            str.replace(at: str.count - 1,
-                        with: characterAt(index: (indexOf(character: str.last ?? ".", array) + 1) % array.count, array))
+            generationString.replace(at: generationString.count - 1,
+                        with: characterAt(index: (indexOf(character: generationString.last ?? " ", array) + 1) % array.count, array))
             
-            if indexOf(character: str.last ?? ".", array) == 0 {
-                str = String(generateBruteForce(String(str.dropLast()), fromArray: array)) + String(str.last ?? ".")
+            if indexOf(character: generationString.last ?? " ", array) == 0 {
+                generationString = String(generateBruteForce(String(generationString.dropLast()), fromArray: array)) + String(generationString.last ?? " ")
             }
         }
-        
-        return str
+        return generationString
     }
 }
