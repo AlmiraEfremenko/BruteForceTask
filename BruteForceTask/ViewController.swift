@@ -19,10 +19,10 @@ class ViewController: UIViewController {
     
     // MARK: - Properties
     
-    let queue = OperationQueue()
-    let mainQueue = OperationQueue.main
+    private let queue = OperationQueue()
+    private let mainQueue = OperationQueue.main
     
-    var isBlack: Bool = false {
+    private var isBlack: Bool = false {
         didSet {
             if isBlack {
                 self.view.backgroundColor = .black
