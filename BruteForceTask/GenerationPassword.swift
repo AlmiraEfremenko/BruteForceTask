@@ -42,7 +42,7 @@ class GenerationPassword: Operation {
         print(password)
     }
     
-    // MARK: - Numerical sampling method
+    // MARK: - Method of fetching characters by index
     
     /// Method to iterate over characters and return the element at the first index
     /// - Parameters:
@@ -82,7 +82,9 @@ class GenerationPassword: Operation {
             generationString.append(characterAt(index: 0, array))
         } else {
             generationString.replace(at: generationString.count - 1,
-                        with: characterAt(index: (indexOf(character: generationString.last ?? " ", array) + 1) % array.count, array))
+                        with: characterAt(
+                            index: (indexOf(
+                                        character: generationString.last ?? " ", array) + 1) % array.count, array))
             
             if indexOf(character: generationString.last ?? " ", array) == 0 {
                 generationString = String(generateBruteForce(String(generationString.dropLast()), fromArray: array)) + String(generationString.last ?? " ")
