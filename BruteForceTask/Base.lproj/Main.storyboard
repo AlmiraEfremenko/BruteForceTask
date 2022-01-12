@@ -37,7 +37,7 @@
                                         <rect key="frame" x="0.0" y="137.5" width="46" height="30"/>
                                         <state key="normal" title="Button"/>
                                         <connections>
-                                            <action selector="buttonOfChangeColorView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xW9-HW-FOo"/>
+                                            <action selector="buttonOfChangeColorView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZR3-Pc-ABj"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6k-dA-QeT">
@@ -58,6 +58,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonColorView" destination="ebP-VR-7n1" id="ZX1-5P-qho"/>
                         <outlet property="buttonOfGenerationPassword" destination="h6k-dA-QeT" id="UdZ-IK-OFm"/>
                         <outlet property="indicator" destination="d59-Y7-CVy" id="ixs-mW-u9h"/>
                         <outlet property="label" destination="EDS-sN-Dzu" id="EYL-ro-td0"/>
