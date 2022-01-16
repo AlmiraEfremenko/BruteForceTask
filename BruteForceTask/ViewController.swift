@@ -20,7 +20,6 @@ class ViewController: UIViewController {
     // MARK: - Properties
     
     private let queue = OperationQueue()
-    private let mainQueue = OperationQueue.main
     
     private var isBlack: Bool = false {
         didSet {
@@ -40,14 +39,21 @@ class ViewController: UIViewController {
     
     @IBAction func buttonOfGenerationPassword(_ sender: Any) {
         setupViewBruteForcePassword()
+        
+        // Присвоение значения textField константе passwordBruteForce
         let passwordBruteForce = textField.text ?? " "
+        
+        // Здесь радробили массив из строк на кусочки по 2 символа с помощью метода split
         let passwordSplit = passwordBruteForce.split(by: 2)
+        
         var arrayGenerationPassword = [GenerationPassword]()
         
+        // Каждый кусочек по 2 символа из массива отправляется в операцию
         passwordSplit.forEach { i in
             arrayGenerationPassword.append(GenerationPassword(password: i))
         }
         
+        // Каждая операция отправляется в очередь
         arrayGenerationPassword.forEach { i in
             queue.addOperation(i)
         }
