@@ -26,7 +26,7 @@ class GenerationPassword: Operation {
     }
     
     // MARK: - Setting password generation
-    
+
     /// This password guessing function
     /// - Parameter passwordToUnlock: password guessing parameter
     
@@ -63,8 +63,7 @@ class GenerationPassword: Operation {
     /// - Returns: character
     
     private func characterAt(index: Int, _ array: [String]) -> Character {
-        return index < array.count ? Character(array[index])
-            : Character("")
+        return index < array.count ? Character(array[index]) : Character("")
     }
     
     // MARK: - String sampling method
